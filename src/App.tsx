@@ -1,24 +1,34 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import {Routes, Route} from 'react-router-dom'
+import NavBar from './components/Navbar';
+import Home from './components/pages/Home';
+import Register from './components/pages/Register';
+import About from './components/pages/About';
+import FAQ from './components/pages/FAQ';
+import Success from './components/pages/Success';
+import ManageNames from './components/pages/ManageNames';
+import {useState, useEffect} from 'react';
+import ConnectWalletModal from './components/modals/ConnectWalletModal';
 
 function App() {
+
+  const [connected, setConnected] = useState(false)
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {connected ? <ConnectWalletModal setConnected={setConnected} /> : <></>}
+      <NavBar connected={connected} setConnected={setConnected}/>
+
+      <Routes>
+      <Route path="*" element={<Home />}/>
+        <Route path="/Home" element={<Home />}/>
+        <Route path="/FAQ" element={<FAQ />}/>
+        <Route path="/About" element={<About />}/>
+        <Route path="/Success" element={<Success />}/>
+        <Route path="/Register" element={<Register />}/>
+        <Route path="/ManageNames" element={<ManageNames />}/>
+      </Routes>
+    
     </div>
   );
 }
